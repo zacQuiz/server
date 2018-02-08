@@ -28,7 +28,7 @@ const myprofile = (req,res)=>{
 
 const addScoreToDatabase = (req,res)=>{
     let objScore = {
-        userId  : req.body.userId,
+        userId  : req.headers.userId,
         level : req.body.level,
         score : req.body.score
     }
