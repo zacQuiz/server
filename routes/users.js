@@ -7,5 +7,6 @@ router.post('/score',userRouter.addScoreToDatabase) //score
 router.delete('/score/:id',userRouter.deleteScore)
 router.get('/scores/:id',userRouter.findMyScore)
 router.get('/profile/:id',userRouter.myprofile)
+router.get('/',userRouter.afterLogin)
 
 module.exports = router;
