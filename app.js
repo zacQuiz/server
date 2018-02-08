@@ -8,6 +8,10 @@ var users = require('./routes/users');
 
 var app = express();
 
+//mongooes 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/zacQuiz');
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -32,7 +36,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;
