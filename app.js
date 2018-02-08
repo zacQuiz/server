@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-
+var cors  = require('cors')
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost/zacQuiz');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(cors())
 app.use('/', index);
 app.use('/users', users);
 

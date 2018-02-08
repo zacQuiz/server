@@ -1,5 +1,38 @@
 const User = require('../models/User')
 const Score = require('../models/Score')
+var FB = require('fb'),
+    fb = new FB.Facebook({
+        version : 'v2.8'
+    });
+
+const afterLogin = (req,res)=>{
+    FB.setAccessToken(req.headers.accesstoken);
+        FB.api('/me', {
+            fields:['name','email','picture']
+        },'GET',function(response){
+            console.log(response)
+            res.send(response)
+            User.find({email:response.email})
+             .then(doc=>{
+                 if(doc.length !== 0){
+                    res.status(200).json({user:doc})
+                 }else{
+                     let user = new User({
+                         name : response.name,
+                         email: response.email,
+                         photoProfile: response.picture.data.url
+                     })
+                     user.save()
+                      .then(userSaved=>{res.statu(200).json({user:userSaved})})
+                      .catch(err=>{res.send(err)})
+                 }
+             }).catch(err=>{res.send(err)})
+            // res.send(response)
+            // gua cek database by email
+            // kalo ada dia res send ke client
+            // kalo ga ada gua user create res hasil creatan
+        })
+}
 
 const CreateUser = (req,res)=>{
     let objCreate = {
@@ -61,5 +94,5 @@ const findMyScore = (req,res)=>{
 }
 
 module.exports = {
-    CreateUser,addScoreToDatabase,deleteScore,findMyScore,myprofile
+    CreateUser,addScoreToDatabase,deleteScore,findMyScore,myprofile,afterLogin
 }
