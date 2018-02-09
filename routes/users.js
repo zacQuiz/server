@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var userRouter = require('../controllers/user')
 
-router.post('/',userRouter.CreateUser)
-router.post('/score',userRouter.addScoreToDatabase) //score
-router.delete('/score/:id',userRouter.deleteScore)
-router.get('/scores/:id',userRouter.findMyScore)
-router.get('/profile/:id',userRouter.myprofile)
-router.get('/',userRouter.afterLogin)
+router.post('/',userRouter.accesTokenAvailable,userRouter.CreateUser)
+router.post('/score',userRouter.accesTokenAvailable,userRouter.addScoreToDatabase) //score
+router.delete('/:id/score/:scoreId',userRouter.accesTokenAvailable,userRouter.deleteScore)
+router.get('/scores/:id',userRouter.accesTokenAvailable,userRouter.findMyScore)
+router.get('/profile/:id',userRouter.accesTokenAvailable,userRouter.myprofile)
+router.get('/',userRouter.accesTokenAvailable,userRouter.afterLogin)
 
 module.exports = router;
